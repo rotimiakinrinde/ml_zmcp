@@ -1,0 +1,23 @@
+{
+  "model_type": "RandomForestClassifier",
+  "training_date": "2025-11-19T18:29:05.264337",
+  "test_accuracy": 0.8229122954259337,
+  "feature_names": [
+    "Age",
+    "Gender",
+    "MonthlyIncome",
+    "YearsAtCompany",
+    "OverTime",
+    "JobSatisfaction",
+    "WorkLifeBalance",
+    "TrainingTimesLastYear",
+    "Department_HR",
+    "Department_IT",
+    "Department_Operations",
+    "Department_Sales"
+  ],
+  "class_names": [
+    "No Attrition",
+    "Attrition"
+  ]
+}

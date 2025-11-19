@@ -1,0 +1,16 @@
+{
+  "features": [
+    "Age",
+    "Gender",
+    "MonthlyIncome",
+    "YearsAtCompany",
+    "OverTime",
+    "JobSatisfaction",
+    "WorkLifeBalance",
+    "TrainingTimesLastYear",
+    "Department_HR",
+    "Department_IT",
+    "Department_Operations",
+    "Department_Sales"
+  ]
+}

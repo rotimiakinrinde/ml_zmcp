@@ -1,0 +1,201 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║     DOCKER DEPLOYMENT - VISUAL STEP-BY-STEP GUIDE             ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+
+CURRENT STATE (Where you are now):
+═══════════════════════════════════════════════════════════════
+
+Your notebook location:
+┌─────────────────────────────────────────────────────────┐
+│ C:\Users\akinr\Desktop\10Analytics\                     │
+│     Python\Machine Learning\                            │
+│                                                          │
+│  ├── Attrition_Analysis.ipynb  ✓ Your notebook         │
+│  └── models/                    ✓ Created by notebook   │
+│      ├── random_forest_attrition.pkl  (37.8 MB)        │
+│      ├── model_metadata.json                            │
+│      └── feature_names.json                             │
+└─────────────────────────────────────────────────────────┘
+
+
+WHAT YOU NEED TO DO:
+═══════════════════════════════════════════════════════════════
+
+Step 1: Download Deployment Package
+┌─────────────────────────────────────────────────────────┐
+│ Download "docker_deployment_package" folder             │
+│ Place it in the same directory as your notebook         │
+│                                                          │
+│ Result:                                                  │
+│  C:\Users\akinr\Desktop\10Analytics\                    │
+│      Python\Machine Learning\                           │
+│                                                          │
+│   ├── Attrition_Analysis.ipynb                         │
+│   ├── models/                                           │
+│   └── docker_deployment_package/  ← NEW FOLDER         │
+└─────────────────────────────────────────────────────────┘
+
+
+Step 2: Copy Model Files
+┌─────────────────────────────────────────────────────────┐
+│                                                          │
+│  SOURCE (from notebook):                                │
+│  ┌────────────────────┐                                │
+│  │ models/            │                                 │
+│  │  ├── *.pkl         │─────┐                          │
+│  │  ├── *.json        │     │                          │
+│  │  └── *.json        │     │ COPY THESE 3 FILES       │
+│  └────────────────────┘     │                          │
+│                              │                          │
+│                              ↓                          │
+│  DESTINATION (to deployment):                          │
+│  ┌────────────────────────────────────┐               │
+│  │ docker_deployment_package/         │               │
+│  │   └── models/                      │               │
+│  │       ├── *.pkl         ← HERE     │               │
+│  │       ├── *.json        ← HERE     │               │
+│  │       └── *.json        ← HERE     │               │
+│  └────────────────────────────────────┘               │
+│                                                          │
+│  PowerShell Command:                                    │
+│  Copy-Item ..\models\* .\models\ -Force                │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+
+
+Step 3: Deploy with Docker
+┌─────────────────────────────────────────────────────────┐
+│                                                          │
+│  Open PowerShell in:                                    │
+│  docker_deployment_package\                             │
+│                                                          │
+│  Run:                                                   │
+│  .\deploy.ps1                                          │
+│                                                          │
+│  This will:                                             │
+│  [1/4] Check prerequisites    ✓                        │
+│  [2/4] Build Docker image     ✓ (2-5 min)             │
+│  [3/4] Start container        ✓                        │
+│  [4/4] Test API               ✓                        │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+
+
+Step 4: Your API is Live!
+┌─────────────────────────────────────────────────────────┐
+│                                                          │
+│   🎉 SUCCESS! API Running at:                          │
+│                                                          │
+│   http://localhost:5000                                 │
+│                                                          │
+│   Endpoints:                                            │
+│   • GET  /health          ← Check status              │
+│   • GET  /model/info      ← Model details             │
+│   • POST /predict         ← Single prediction         │
+│   • POST /predict/batch   ← Batch predictions         │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+
+
+FOLDER STRUCTURE (After setup):
+═══════════════════════════════════════════════════════════════
+
+C:\Users\akinr\Desktop\10Analytics\Python\Machine Learning\
+│
+├── Attrition_Analysis.ipynb
+│
+├── models/
+│   ├── random_forest_attrition.pkl
+│   ├── model_metadata.json
+│   └── feature_names.json
+│
+└── docker_deployment_package/
+    │
+    ├── START_HERE.md              ⭐ Read first
+    ├── SETUP_INSTRUCTIONS.md      ⭐ Quick guide
+    ├── README.md                   Full docs
+    ├── deploy.ps1                 ⚡ Run this
+    │
+    ├── app/
+    │   └── app.py                  Flask API
+    │
+    ├── models/                     ⚠️ Copy files here!
+    │   ├── random_forest_attrition.pkl  ← Copy from ../models/
+    │   ├── model_metadata.json          ← Copy from ../models/
+    │   └── feature_names.json           ← Copy from ../models/
+    │
+    ├── tests/
+    │   └── test_api.py            Test script
+    │
+    ├── Dockerfile
+    ├── docker-compose.yml
+    └── requirements.txt
+
+
+QUICK COMMANDS:
+═══════════════════════════════════════════════════════════════
+
+1. Navigate to deployment folder:
+   cd docker_deployment_package
+
+2. Copy model files:
+   Copy-Item ..\models\* .\models\ -Force
+
+3. Deploy:
+   .\deploy.ps1
+
+4. Test:
+   curl http://localhost:5000/health
+
+
+TROUBLESHOOTING:
+═══════════════════════════════════════════════════════════════
+
+Issue: "Cannot find model files"
+→ Check: ls models\
+→ Fix: Copy files with command above
+
+Issue: "Docker not running"
+→ Fix: Open Docker Desktop and wait
+
+Issue: "Port 5000 in use"
+→ Fix: docker-compose down
+
+Issue: "Container won't start"
+→ Check: docker-compose logs
+
+
+HELPFUL LINKS:
+═══════════════════════════════════════════════════════════════
+
+Files to read:
+1. START_HERE.md           - Overview
+2. SETUP_INSTRUCTIONS.md   - Quick setup
+3. README.md               - Full documentation
+
+
+TIME REQUIRED:
+═══════════════════════════════════════════════════════════════
+
+Step 1: Download package        (1 min)
+Step 2: Copy model files         (1 min)
+Step 3: Deploy                   (5 min)
+Step 4: Test                     (2 min)
+                                 --------
+TOTAL:                           ~9 minutes
+
+
+YOUR NEXT ACTION:
+═══════════════════════════════════════════════════════════════
+
+→ Download the docker_deployment_package folder
+→ Open SETUP_INSTRUCTIONS.md
+→ Follow the 4 steps
+→ Your API will be live!
+
+
+Good luck! 🚀
+
