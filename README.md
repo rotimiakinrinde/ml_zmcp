@@ -1,4 +1,4 @@
-# Retention Prediction System - Project Summary
+# Retention Prediction System
 
 ## Overview
 
