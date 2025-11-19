@@ -1,4 +1,4 @@
-# Employee Attrition Prediction System - Project Summary
+# Retention Prediction System - Project Summary
 
 ## Overview
 
